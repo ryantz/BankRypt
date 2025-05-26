@@ -1,0 +1,55 @@
+{
+	"info": {
+		"_postman_id": "421cf002-4488-42c2-a963-8daed434adb8",
+		"name": "User Accounts API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45311912"
+	},
+	"item": [
+		{
+			"name": "Get All Users",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Find User by Id",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Create New User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"ryan@gmail.com\",\r\n    \"firstName\" : \"Ryan\",\r\n    \"lastName\" : \"Tan\",\r\n    \"contactNumber\" : 96757907,\r\n    \"username\" : \"ryantz\",\r\n    \"password\" : \"Rtzy1997*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
