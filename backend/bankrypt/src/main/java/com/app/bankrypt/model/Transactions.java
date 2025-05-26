@@ -26,12 +26,16 @@ public class Transactions {
     @Column(name="transaction_type", nullable=false)
     private TransactionType transactType;
 
+    @Column(name="transaction_limit", nullable=false, precision=19, scale=2)
+    private BigDecimal transactLimit;
+
     @Column(name="requires_approval", nullable=false)
     private Boolean requiresApproval = false;
 
-    @Column(name="before_transaction_value", nullable=false)
+    @Column(name="before_transaction_value", nullable=false, precision=19, scale=2)
     private BigDecimal balanceBeforeTransact;
 
+    // precision total number of digits before and after deci. scale deci pt
     @Column(name="after_transaction_value", nullable=false, precision=19, scale=2)
     private BigDecimal balanceAfterTransact;
 
@@ -43,6 +47,6 @@ public class Transactions {
 
     // only needed when transactions exceed an amount, LARGE_PAYMENT
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "approver_id", nullable = true)
+    @JoinColumn(name = "approver_id", nullable=true)
     private Users approverId;
 }

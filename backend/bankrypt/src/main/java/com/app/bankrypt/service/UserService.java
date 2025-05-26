@@ -5,10 +5,11 @@ import com.app.bankrypt.enums.UserRoles;
 import com.app.bankrypt.model.Users;
 import com.app.bankrypt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -73,5 +74,12 @@ public class UserService {
 
     public List<Users> findAllUsers(){
         return userRepo.findAll();
+    }
+
+    public Optional<Users> findUserById(Long id){
+        if(id == null){
+            throw new IllegalArgumentException("No id entered");
+        }
+        return userRepo.findById(id);
     }
 }

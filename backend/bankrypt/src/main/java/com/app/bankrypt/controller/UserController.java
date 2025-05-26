@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -29,8 +30,9 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllUsers());
     }
 
-    //@GetMapping("/search/{id}")
-    //public ResponseEntity<Users> searchUser(@RequestParam Users id){
-    //    return ResponseEntity.ok(userService.findById(id));
-    //}
+    @GetMapping("/search/{id}")
+    public ResponseEntity<Users> searchUser(@PathVariable Long id){
+        return userService.findUserById(id)
+                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
 }
