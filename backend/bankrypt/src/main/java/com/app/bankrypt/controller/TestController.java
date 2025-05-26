@@ -16,7 +16,7 @@ public class TestController {
     private TestService Tserv;
 
     @GetMapping("/all")
-    public List<Test> getALl() {
+    public List<Test> getAll() {
         return Tserv.getAllTestValues();
     }
 

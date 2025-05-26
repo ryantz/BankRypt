@@ -1,0 +1,77 @@
+package com.app.bankrypt.service;
+
+import com.app.bankrypt.dto.UserCreationDTO;
+import com.app.bankrypt.enums.UserRoles;
+import com.app.bankrypt.model.Users;
+import com.app.bankrypt.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepo;
+
+    /*
+     * creates (POST):
+     * user accounts done
+     * admin accounts done
+     * data accounts done
+
+     * updates (UPDATE/PUT):
+     * passwords
+     * emails
+     * address
+
+     * deletes (DELETE):
+     * account
+
+     * retrieves (GET):
+     * passwords ?
+     * id
+     */
+
+    // post
+    // if email has @bankrypt.com / @bankryptdata.com it is an admin, auto put admin/data
+    public Users createUser(UserCreationDTO userInfo){
+        String adminDomain = "bankrypt.com";
+        String dataDomain = "bankryptdata.com";
+
+        String userEnteredEmail = userInfo.getEmail();
+
+        if(userEnteredEmail == null || !userEnteredEmail.contains("@")){
+            throw new IllegalArgumentException("Invalid email address");
+        }
+
+        String userEmailDomain = userEnteredEmail.substring(userEnteredEmail.indexOf("@")+ 1).toLowerCase();
+        Users newUser = new Users();
+
+        newUser.setEmail(userInfo.getEmail());
+        newUser.setFirstName(userInfo.getFirstName());
+        newUser.setLastName(userInfo.getLastName());
+        newUser.setUsername(userInfo.getUsername());
+        newUser.setPassword(userInfo.getPassword());
+        newUser.setContactNumber(userInfo.getContactNumber());
+        newUser.setUserRole(UserRoles.CLIENT);
+
+        if(userInfo.getContactNumber() == null) {
+            newUser.setContactNumber(null);
+        }
+
+        if(userEmailDomain.equals(adminDomain)){
+            newUser.setUserRole(UserRoles.ADMIN);
+        } else if (userEmailDomain.equals(dataDomain)) {
+            newUser.setUserRole(UserRoles.DATA);
+        }
+
+        return userRepo.save(newUser);
+    }
+
+    public List<Users> findAllUsers(){
+        return userRepo.findAll();
+    }
+}

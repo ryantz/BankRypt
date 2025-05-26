@@ -1,7 +1,7 @@
 package com.app.bankrypt.enums;
 
 public enum UserRoles {
-    USER,
+    CLIENT,
     ADMIN,
-    ADMIN_DATA,
+    DATA,
 }
