@@ -6,6 +6,9 @@ import com.app.bankrypt.model.Users;
 import com.app.bankrypt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +20,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     /*
      * creates (POST):
      * user accounts done
@@ -49,13 +54,17 @@ public class UserService {
         }
 
         String userEmailDomain = userEnteredEmail.substring(userEnteredEmail.indexOf("@")+ 1).toLowerCase();
+
+        String userPassword = userInfo.getPassword();
+        String hashedPassword = passwordEncoder.encode(userPassword);
+
         Users newUser = new Users();
 
         newUser.setEmail(userInfo.getEmail());
         newUser.setFirstName(userInfo.getFirstName());
         newUser.setLastName(userInfo.getLastName());
         newUser.setUsername(userInfo.getUsername());
-        newUser.setPassword(userInfo.getPassword());
+        newUser.setPassword(hashedPassword);
         newUser.setContactNumber(userInfo.getContactNumber());
         newUser.setUserRole(UserRoles.CLIENT);
 
